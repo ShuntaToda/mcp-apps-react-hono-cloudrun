@@ -1,0 +1,17 @@
+{
+  "name": "shop-mcp-apps-gcp",
+  "private": true,
+  "scripts": {
+    "dev": "pnpm --filter @shop-mcp/server dev",
+    "build": "pnpm --filter @shop-mcp/app build && pnpm --filter @shop-mcp/server build",
+    "typecheck": "pnpm -r typecheck"
+  },
+  "devDependencies": {
+    "esbuild": "^0.27.3",
+    "tsx": "^4.21.0",
+    "typescript": "^5.9.3"
+  },
+  "pnpm": {
+    "onlyBuiltDependencies": ["esbuild"]
+  }
+}
