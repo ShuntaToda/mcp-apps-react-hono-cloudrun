@@ -64,7 +64,7 @@ resource "google_cloud_run_v2_service" "mcp" {
 
       env {
         name  = "SERVICE_URL"
-        value = "" # 初回デプロイ後に Cloud Run URL を設定して再デプロイ
+        value = var.service_url
       }
     }
 

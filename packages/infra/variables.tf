@@ -14,3 +14,9 @@ variable "service_name" {
   type        = string
   default     = "shop-mcp"
 }
+
+variable "service_url" {
+  description = "Cloud Run service URL (set after first deploy)"
+  type        = string
+  default     = ""
+}

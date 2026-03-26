@@ -8,8 +8,9 @@ import {
 } from "@modelcontextprotocol/ext-apps/server";
 import { z } from "zod";
 import { cors } from "hono/cors";
-// esbuild の loader: { ".html": "text" } により、ビルド時にHTMLが文字列として埋め込まれる
-import mcpAppHtml from "../../app/dist/mcp-app.html";
+import { loadMcpAppHtml } from "./load-html.js";
+
+const mcpAppHtml = loadMcpAppHtml();
 
 const app = new Hono();
 
@@ -132,7 +133,9 @@ function createMcpServer(): McpServer {
               ui: {
                 csp: {
                   resourceDomains: ["https://placehold.co"],
-                  connectDomains: [process.env.SERVICE_URL ?? ""],
+                  connectDomains: [
+                    process.env.SERVICE_URL || "http://localhost:3000",
+                  ],
                 },
               },
             },

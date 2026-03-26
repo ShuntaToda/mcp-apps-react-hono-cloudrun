@@ -14,6 +14,10 @@ if (fs.existsSync(envPath)) {
   serviceUrl = envFile.match(/SERVICE_URL=(.+)/)?.[1]?.trim() ?? "";
 }
 
+// ビルド済みHTMLを読み込み、define で文字列として埋め込む
+const htmlPath = path.join(repoRoot, "packages/app/dist/mcp-app.html");
+const mcpAppHtml = fs.readFileSync(htmlPath, "utf-8");
+
 await build({
   entryPoints: [path.join(__dirname, "src/server.ts")],
   bundle: true,
@@ -23,8 +27,10 @@ await build({
   target: "node22",
   mainFields: ["module", "main"],
   conditions: ["module"],
-  loader: { ".html": "text" },
-  define: { "process.env.SERVICE_URL": JSON.stringify(serviceUrl) },
+  define: {
+    "process.env.SERVICE_URL": JSON.stringify(serviceUrl),
+    BUNDLED_HTML: JSON.stringify(mcpAppHtml),
+  },
   banner: {
     js: "import { createRequire } from 'module'; const require = createRequire(import.meta.url);",
   },
